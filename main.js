@@ -45,7 +45,7 @@ function startAction() {
     localStream = stream;
   }, traceError);
   trace('Local Stream Enabled');
-  if memberLength === 2 {
+  if (memberLength === 2) {
   callButton.disabled = false;
   }
   trace('Call Button Activated')
