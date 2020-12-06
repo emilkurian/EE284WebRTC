@@ -44,6 +44,7 @@ function startAction() {
     localStream = stream;
   }, traceError);
   trace('Local Stream Enabled');
+  callButton.disabled = false;
 }
         
 function callAction() {
