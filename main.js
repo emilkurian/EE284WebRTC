@@ -74,10 +74,11 @@ drone.on('open', error => {
       traceError(error);
     }
   });
+  trace(roomName);
   // We're connected to the room and received an array of 'members'
   // connected to the room (including us). Signaling server is ready.
   room.on('members', members => {
-    trace('MEMBERS');
+    trace('MEMBERS:' + members.length);
   });
 });
 
