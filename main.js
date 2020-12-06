@@ -52,7 +52,7 @@ function callAction() {
   callButton.disabled = true;
   hangupButton.disabled = false;
   trace('Starting call.');
-  startWebRTC(isOfferer);
+  startWebRTC(true);
   trace('Message Sent')
 }
   
