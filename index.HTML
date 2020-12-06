@@ -1,0 +1,32 @@
+<!--HTML Used from Google Real time communication with WebRTC Tutorial -->
+<!--https://codelabs.developers.google.com/codelabs/webrtc-web/#4-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Video Chat using WebRTC</title>
+  <link rel="stylesheet" href="css/main.css" />
+
+</head>
+
+<body>
+
+  <h1>EE284 Realtime Communication with WebRTC</h1>
+
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay playsinline></video>
+
+  <div>
+    <button id="startButton">Start</button>
+    <button id="callButton">Call</button>
+    <button id="hangupButton">Hang Up</button>
+  </div>
+
+  <script scr="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="js/main.js"></script>
+
+
+</body>
+</html>
