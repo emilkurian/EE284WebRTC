@@ -41,6 +41,7 @@ function startAction() {
   }).then(stream => {
     // Display your local video in #localVideo element
     localVideo.srcObject = stream;
+    localStream = stream;
   }, traceError);
   trace('Local Stream Enabled');
 }
