@@ -36,15 +36,6 @@ function traceError(error) {
 function startAction() {
   trace('Start Button Inititated');
   startButton.disabled = true;
-  navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: true,
-  }).then(stream => {
-    // Display your local video in #localVideo element
-    localVideo.srcObject = stream;
-    localStream = stream;
-  }, traceError);
-  trace('Local Stream Enabled');
   if (memberLength === 2) {
   callButton.disabled = false;
   }
