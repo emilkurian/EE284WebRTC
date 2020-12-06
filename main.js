@@ -22,7 +22,9 @@ function traceError(error) {
 };
 
 function startAction() {
-navigator.mediaDevices.getUserMedia({
+  trace('Start Button Inititated');
+  startButton.disabled = true;
+  navigator.mediaDevices.getUserMedia({
     audio: true,
     video: true,
   }).then(stream => {
