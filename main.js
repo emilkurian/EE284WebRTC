@@ -12,7 +12,6 @@ let pc;
 let localStream;
 
 // Define action buttons.
-const startButton = document.getElementById('startButton');
 const callButton = document.getElementById('callButton');
 const hangupButton = document.getElementById('hangupButton');
 
@@ -21,7 +20,6 @@ callButton.disabled = false;
 hangupButton.disabled = true;
 
 // functions
-startButton.addEventListener('click', startAction);
 callButton.addEventListener('click', callAction);
 hangupButton.addEventListener('click', hangupAction);
 
