@@ -94,11 +94,13 @@ function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
 
   localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+  trace('Stream added')
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
   pc.onicecandidate = event => {
     if (event.candidate) {
       sendMessage({'candidate': event.candidate});
+      trace('Ice candidate' + event.candidate);
     }
   };
 
@@ -106,6 +108,7 @@ function startWebRTC(isOfferer) {
   if (isOfferer) {
     pc.onnegotiationneeded = () => {
       pc.createOffer().then(localDescCreated).catch(traceError);
+      trace('Offer Created');
     }
   }
 
@@ -115,6 +118,7 @@ function startWebRTC(isOfferer) {
     if (!remoteVideo.srcObject || remoteVideo.srcObject.id !== stream.id) {
       remoteVideo.srcObject = stream;
     }
+    trace('remoteStream');
   };
 
   // Listen to signaling data from Scaledrone
