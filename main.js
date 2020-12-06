@@ -9,6 +9,7 @@ const configuration = {
 };
 let room;
 let pc;
+let localStream;
 
 // Define action buttons.
 const startButton = document.getElementById('startButton');
@@ -40,8 +41,6 @@ function startAction() {
   }).then(stream => {
     // Display your local video in #localVideo element
     localVideo.srcObject = stream;
-    // Add your stream to be sent to the connecting peer
-    stream.getTracks().forEach(track => pc.addTrack(track, stream));
   }, traceError);
   trace('Local Stream Enabled');
 }
@@ -49,7 +48,6 @@ function startAction() {
 function callAction() {
   callButton.disabled = true;
   hangupButton.disabled = false;
-
   trace('Starting call.');
   startWebRTC(isOfferer);
   trace('Message Sent')
@@ -91,6 +89,7 @@ function sendMessage(message) {
 function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
 
+  localStream.getTracks().forEach(track => pc.addTrack(track, stream));
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
   pc.onicecandidate = event => {
