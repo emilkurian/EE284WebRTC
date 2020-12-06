@@ -81,7 +81,7 @@ drone.on('open', error => {
   // We're connected to the room and received an array of 'members'
   // connected to the room (including us). Signaling server is ready.
   room.on('members', members => {
-    
+    memberLength = members.length
     trace('MEMBERS:' + members.length);
   });
 });
@@ -116,6 +116,16 @@ function startWebRTC(isOfferer) {
     }
   }
 
+  navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: true,
+  }).then(stream => {
+    // Display your local video in #localVideo element
+    localVideo.srcObject = stream;
+    // Add your stream to be sent to the conneting peer
+    stream.getTracks().forEach(track => pc.addTrack(track, stream));
+  }, onError);
+  
   // When a remote stream arrives display it in the #remoteVideo element
   pc.ontrack = event => {
     const stream = event.streams[0];
