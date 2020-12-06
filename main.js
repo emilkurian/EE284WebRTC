@@ -88,7 +88,6 @@ function sendMessage(message) {
 function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
 
-  localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
   trace('Stream added')
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
