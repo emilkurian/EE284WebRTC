@@ -124,7 +124,7 @@ function startWebRTC(isOfferer) {
     localVideo.srcObject = stream;
     // Add your stream to be sent to the conneting peer
     stream.getTracks().forEach(track => pc.addTrack(track, stream));
-  }, onError);
+  }, traceError);
   
   // When a remote stream arrives display it in the #remoteVideo element
   pc.ontrack = event => {
