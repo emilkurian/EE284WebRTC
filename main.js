@@ -10,6 +10,16 @@ const configuration = {
 let room;
 let pc;
 
+// Define action buttons.
+const startButton = document.getElementById('startButton');
+const callButton = document.getElementById('callButton');
+const hangupButton = document.getElementById('hangupButton');
+
+// Set up initial action buttons status: disable call and hangup.
+callButton.disabled = true;
+hangupButton.disabled = true;
+
+// functions
 startButton.addEventListener('click', startAction);
 callButton.addEventListener('click', callAction);
 hangupButton.addEventListener('click', hangupAction);
