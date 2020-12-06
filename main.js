@@ -17,7 +17,7 @@ const callButton = document.getElementById('callButton');
 const hangupButton = document.getElementById('hangupButton');
 
 // Set up initial action buttons status: disable call and hangup.
-callButton.disabled = true;
+callButton.disabled = false;
 hangupButton.disabled = true;
 
 // functions
@@ -31,22 +31,6 @@ function trace(message) {
 function traceError(error) {
   console.error(error);
 };
-
-function startAction() {
-  trace('Start Button Inititated');
-  startButton.disabled = true;
-  navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: true,
-  }).then(stream => {
-    // Display your local video in #localVideo element
-    localVideo.srcObject = stream;
-    localStream = stream;
-  }, traceError);
-  trace('Local Stream Enabled');
-  callButton.disabled = false;
-  trace('Call Button Activated')
-}
         
 function callAction() {
   callButton.disabled = true;
@@ -92,9 +76,8 @@ function sendMessage(message) {
 
 function startWebRTC(isOfferer) {
   pc = new RTCPeerConnection(configuration);
-
-  localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
-  trace('Stream added')
+  
+  
   // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
   // message to the other peer through the signaling server
   pc.onicecandidate = event => {
@@ -121,6 +104,16 @@ function startWebRTC(isOfferer) {
     trace('remoteStream');
   };
 
+  navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: true,
+  }).then(stream => {
+    // Display your local video in #localVideo element
+    localVideo.srcObject = stream;
+    // Add your stream to be sent to the connecting peer
+    stream.getTracks().forEach(track => pc.addTrack(track, stream));
+  }, traceError);
+  
   // Listen to signaling data from Scaledrone
   room.on('data', (message, client) => {
     // Message was sent by us
