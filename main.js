@@ -43,7 +43,7 @@ function startAction() {
     // Add your stream to be sent to the connecting peer
     stream.getTracks().forEach(track => pc.addTrack(track, stream));
   }, traceError);
-  trace('Local Stream Enabled)
+  trace('Local Stream Enabled');
 }
         
 function callAction() {
