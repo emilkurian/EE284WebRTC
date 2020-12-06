@@ -131,7 +131,7 @@ function startWebRTC(isOfferer) {
         if (pc.remoteDescription.type === 'offer') {
           pc.createAnswer().then(localDescCreated).catch(traceError);
         }
-      }, onError);
+      }, traceError);
     } else if (message.candidate) {
       // Add the new ICE candidate to our connections remote description
       pc.addIceCandidate(
