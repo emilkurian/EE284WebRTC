@@ -45,6 +45,7 @@ function startAction() {
   }, traceError);
   trace('Local Stream Enabled');
   callButton.disabled = false;
+  trace('Call Button Activated')
 }
         
 function callAction() {
