@@ -10,6 +10,9 @@ const configuration = {
 let room;
 let pc;
 
+startButton.addEventListener('click', startAction);
+callButton.addEventListener('click', callAction);
+hangupButton.addEventListener('click', hangupAction);
 
 function trace(message) {
   console.log(message)
@@ -18,6 +21,36 @@ function traceError(error) {
   console.error(error);
 };
 
+function startAction() {
+navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: true,
+  }).then(stream => {
+    // Display your local video in #localVideo element
+    localVideo.srcObject = stream;
+    // Add your stream to be sent to the connecting peer
+    stream.getTracks().forEach(track => pc.addTrack(track, stream));
+  }, traceError);
+  trace('Local Stream Enabled)
+}
+        
+function callAction() {
+  callButton.disabled = true;
+  hangupButton.disabled = false;
+
+  trace('Starting call.');
+  startWebRTC(isOfferer);
+  trace('Message Sent')
+}
+  
+function hangupAction() {
+  pc.close();
+  pc = null;
+  hangupButton.disabled = true;
+  callButton.disabled = false;
+  trace('Ending call.');
+}
+        
 drone.on('open', error => {
   if (error) {
     return traceError(error);
@@ -31,10 +64,7 @@ drone.on('open', error => {
   // We're connected to the room and received an array of 'members'
   // connected to the room (including us). Signaling server is ready.
   room.on('members', members => {
-    console.log('MEMBERS', members);
-    // If we are the second user to connect to the room we will be creating the offer
-    const isOfferer = members.length === 2;
-    startWebRTC(isOfferer);
+    trace('MEMBERS');
   });
 });
 
@@ -71,16 +101,6 @@ function startWebRTC(isOfferer) {
       remoteVideo.srcObject = stream;
     }
   };
-
-  navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: true,
-  }).then(stream => {
-    // Display your local video in #localVideo element
-    localVideo.srcObject = stream;
-    // Add your stream to be sent to the conneting peer
-    stream.getTracks().forEach(track => pc.addTrack(track, stream));
-  }, traceError);
 
   // Listen to signaling data from Scaledrone
   room.on('data', (message, client) => {
